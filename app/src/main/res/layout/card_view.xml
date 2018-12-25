@@ -28,16 +28,14 @@
             android:textAlignment="center"
             android:text="0" />
 
-        <com.daquexian.flexiblerichtextview.FlexibleRichTextView
+        <TextView
             android:id="@+id/my_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_toRightOf="@id/text_priority"
-
             android:text=""
             android:textColor="#000000"
-            android:textSize="20sp" />
+            android:textSize="25sp" />
 
         <Button
             android:id="@+id/button_delete"
