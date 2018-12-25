@@ -1,0 +1,9 @@
+<resources>
+    <string name="akyuu_app_name">Akyuu</string>
+    <string name="dialog_add_title">Add</string>
+    <string name="dialog_add_hint_text">Text</string>
+    <string name="dialog_add_hint_priority">Priority</string>
+    <string name="dialog_add_button_cancel">Cancel</string>
+    <string name="dialog_add_button_confirm">Confirm</string>
+
+</resources>
