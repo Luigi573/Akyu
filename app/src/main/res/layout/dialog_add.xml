@@ -1,6 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <EditText
         android:id="@+id/dialog_add_text"
@@ -9,13 +10,19 @@
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:hint="@string/dialog_add_hint_text"/>
-    <EditText
+    <com.roughike.swipeselector.SwipeSelector
         android:id="@+id/dialog_add_priority"
-        android:layout_width="70dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:hint="@string/dialog_add_hint_priority"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:swipe_indicatorSize="0dp"
+        app:swipe_indicatorActiveColor="@color/colorAccent"
         android:textStyle="bold"/>
+    <Button
+        android:id="@+id/dialog_add_red"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:text="红色"/>
 
 
 </LinearLayout>
