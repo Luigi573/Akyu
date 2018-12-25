@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.daquexian.flexiblerichtextview.FlexibleRichTextView;
-
 import java.util.List;
 
 public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.InfoViewHolder> {
@@ -39,7 +37,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.InfoVi
         ItemInfo itemInfo = itemInfoList.get(position);
 
         holder.vPriority.setText(itemInfo.priority);
-        holder.vText.setText(itemInfo.text);
+        holder.vText.setText(Html.fromHtml(itemInfo.text));
 
         holder.btnDown.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +82,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.InfoVi
 
     public class InfoViewHolder extends RecyclerView.ViewHolder{
         protected TextView vPriority;
-        protected FlexibleRichTextView vText;
+        protected TextView vText;
         protected Button btnUp;
         protected Button btnDown;
         protected Button btnDelete;

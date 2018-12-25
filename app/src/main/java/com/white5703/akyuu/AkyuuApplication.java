@@ -6,10 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import com.white5703.akyuu.Dao.DaoMaster;
 import com.white5703.akyuu.Dao.DaoSession;
 
-import org.scilab.forge.jlatexmath.core.AjLatexMath;
-
-import io.github.kbiakov.codeview.classifier.CodeProcessor;
-
 public class AkyuuApplication extends Application {
     private static AkyuuApplication instance;
 

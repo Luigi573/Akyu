@@ -1,10 +1,9 @@
 package com.white5703.akyuu;
 
 import android.content.DialogInterface;
-import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,20 +11,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.roughike.swipeselector.SwipeItem;
+import com.roughike.swipeselector.SwipeSelector;
 import com.white5703.akyuu.Dao.Note;
 import com.white5703.akyuu.Utility.AkyuuUtility;
 import com.white5703.akyuu.Utility.DBTool;
 
-import org.scilab.forge.jlatexmath.core.AjLatexMath;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import io.github.kbiakov.codeview.classifier.CodeProcessor;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initRichTextView();
 
 //        DBTool.clearTableNote();
 
@@ -84,10 +81,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void initRichTextView() {
-        AjLatexMath.init(this);
-        CodeProcessor.init(this);
-    }
 
     private void initButtonEvent(){
         adapter.buttonSetOnclick(new MainListAdapter.ButtonInterface() {
@@ -116,7 +109,25 @@ public class MainActivity extends AppCompatActivity {
     private void doAdd() {
         View view = getLayoutInflater().inflate(R.layout.dialog_add, null);
         final EditText etText = view.findViewById(R.id.dialog_add_text);
-        final EditText edPriority = view.findViewById(R.id.dialog_add_priority);
+        final SwipeSelector slPriority = view.findViewById(R.id.dialog_add_priority);
+        final Button btnRed = view.findViewById(R.id.dialog_add_red);
+        btnRed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = etText.getText().toString();
+                etText.setText(text + "<font color='#FF0000'></font>");
+            }
+        });
+        slPriority.setItems(
+                new SwipeItem(1,"1",""),
+                new SwipeItem(2,"2",""),
+                new SwipeItem(3,"3",""),
+                new SwipeItem(4,"4",""),
+                new SwipeItem(5,"5",""),
+                new SwipeItem(6,"6",""),
+                new SwipeItem(7,"7",""),
+                new SwipeItem(8,"8",""),
+                new SwipeItem(9,"9",""));
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setView(view)
                 .setTitle(R.string.dialog_add_title)
@@ -130,10 +141,11 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String text = etText.getText().toString();
-                        String priority = edPriority.getText().toString();
-                        Toast.makeText(MainActivity.this, text + " " + priority, Toast.LENGTH_SHORT).show();
-                        //TODO: ADD ITEM
-                        DBTool.insertNote(text,Integer.parseInt(priority));
+                        SwipeItem swipeItem = slPriority.getSelectedItem();
+                        int priority = (int)swipeItem.value;
+//                        Toast.makeText(MainActivity.this, text + " " + priority, Toast.LENGTH_SHORT).show();
+
+                        DBTool.insertNote(text,priority);
                         dialog.dismiss();
                     }
                 }).create();
