@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+    <!--http://www.peise.net/tools/web/#2Z41Tw0w0w0w0-->
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#00B64F</color>
+    <color name="colorPrimaryDark">#007633</color>
+    <color name="colorAccent">#FF3500</color>
 </resources>
