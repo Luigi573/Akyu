@@ -6,5 +6,8 @@
     <string name="dialog_add_button_cancel">Cancel</string>
     <string name="dialog_add_button_confirm">Confirm</string>
     <string name="dialog_list_item_long_click_title">Choose One</string>
+    <string name="main_button_start_title">Let\'s Go</string>
+    <string name="main_button_list_title">List</string>
+    <string name="main_button_settings_title">Settings</string>
 
 </resources>
