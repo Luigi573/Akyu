@@ -5,4 +5,10 @@
         <item>Decrease Priority</item>
         <item>Delete Item</item>
     </string-array>
+
+    <string-array name="spinner_test">
+        <item>test1</item>
+        <item>test2</item>
+        <item>test3</item>
+    </string-array>
 </resources>
