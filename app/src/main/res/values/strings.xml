@@ -9,5 +9,9 @@
     <string name="main_button_start_title">Let\'s Go</string>
     <string name="main_button_list_title">List</string>
     <string name="main_button_settings_title">Settings</string>
+    <string name="performance_already_first">Already the first!</string>
+    <string name="performance_already_last">Already the last!</string>
+    <string name="performance_already_max_priority">Already max priority</string>
+    <string name="performance_already_min_priority">Already min priority</string>
 
 </resources>

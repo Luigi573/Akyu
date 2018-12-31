@@ -27,7 +27,7 @@ public class AkyuuApplication extends Application {
 
 
     private void initDao() {
-        mHelper = new DaoMaster.DevOpenHelper(this,"akyuu_db",null);
+        mHelper = new DaoMaster.DevOpenHelper(this,"akyuu2_db",null);
         db = mHelper.getWritableDatabase();
         mDaoMaster = new DaoMaster(db);
         mDaoSeesion = mDaoMaster.newSession();

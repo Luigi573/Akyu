@@ -23,8 +23,10 @@ public class NoteDao extends AbstractDao<Note, Long> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Text = new Property(1, String.class, "text", false, "TEXT");
-        public final static Property Priority = new Property(2, int.class, "priority", false, "PRIORITY");
+        public final static Property Content = new Property(1, String.class, "content", false, "CONTENT");
+        public final static Property Hided = new Property(2, String.class, "hided", false, "HIDED");
+        public final static Property Tag = new Property(3, String.class, "tag", false, "TAG");
+        public final static Property Priority = new Property(4, int.class, "priority", false, "PRIORITY");
     }
 
     private DaoSession daoSession;
@@ -44,8 +46,10 @@ public class NoteDao extends AbstractDao<Note, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"NOTE\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"TEXT\" TEXT," + // 1: text
-                "\"PRIORITY\" INTEGER NOT NULL );"); // 2: priority
+                "\"CONTENT\" TEXT," + // 1: content
+                "\"HIDED\" TEXT," + // 2: hided
+                "\"TAG\" TEXT," + // 3: tag
+                "\"PRIORITY\" INTEGER NOT NULL );"); // 4: priority
     }
 
     /** Drops the underlying database table. */
@@ -63,11 +67,21 @@ public class NoteDao extends AbstractDao<Note, Long> {
             stmt.bindLong(1, id);
         }
  
-        String text = entity.getText();
-        if (text != null) {
-            stmt.bindString(2, text);
+        String content = entity.getContent();
+        if (content != null) {
+            stmt.bindString(2, content);
         }
-        stmt.bindLong(3, entity.getPriority());
+ 
+        String hided = entity.getHided();
+        if (hided != null) {
+            stmt.bindString(3, hided);
+        }
+ 
+        String tag = entity.getTag();
+        if (tag != null) {
+            stmt.bindString(4, tag);
+        }
+        stmt.bindLong(5, entity.getPriority());
     }
 
     @Override
@@ -79,11 +93,21 @@ public class NoteDao extends AbstractDao<Note, Long> {
             stmt.bindLong(1, id);
         }
  
-        String text = entity.getText();
-        if (text != null) {
-            stmt.bindString(2, text);
+        String content = entity.getContent();
+        if (content != null) {
+            stmt.bindString(2, content);
         }
-        stmt.bindLong(3, entity.getPriority());
+ 
+        String hided = entity.getHided();
+        if (hided != null) {
+            stmt.bindString(3, hided);
+        }
+ 
+        String tag = entity.getTag();
+        if (tag != null) {
+            stmt.bindString(4, tag);
+        }
+        stmt.bindLong(5, entity.getPriority());
     }
 
     @Override
@@ -101,8 +125,10 @@ public class NoteDao extends AbstractDao<Note, Long> {
     public Note readEntity(Cursor cursor, int offset) {
         Note entity = new Note( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // text
-            cursor.getInt(offset + 2) // priority
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // content
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // hided
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // tag
+            cursor.getInt(offset + 4) // priority
         );
         return entity;
     }
@@ -110,8 +136,10 @@ public class NoteDao extends AbstractDao<Note, Long> {
     @Override
     public void readEntity(Cursor cursor, Note entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setText(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setPriority(cursor.getInt(offset + 2));
+        entity.setContent(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setHided(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setTag(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setPriority(cursor.getInt(offset + 4));
      }
     
     @Override

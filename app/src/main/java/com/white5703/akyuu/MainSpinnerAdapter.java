@@ -8,13 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class MainSpinnerAdapter extends ArrayAdapter<String> {
     private Context mContext;
-    private String [] mStringArray;
-    public MainSpinnerAdapter(Context context, String[] stringArray) {
-        super(context, android.R.layout.simple_spinner_item, stringArray);
+    private List<String> mTagList;
+    public MainSpinnerAdapter(Context context, List<String> tagList) {
+        super(context, android.R.layout.simple_spinner_item, tagList);
         mContext = context;
-        mStringArray = stringArray;
+        mTagList = tagList;
     }
 
     @Override
@@ -27,7 +29,7 @@ public class MainSpinnerAdapter extends ArrayAdapter<String> {
 
         //此处text1是Spinner默认的用来显示文字的TextView
         TextView tv = (TextView) convertView.findViewById(android.R.id.text1);
-        tv.setText(mStringArray[position]);
+        tv.setText(mTagList.get(position));
         tv.setTextSize(22f);
         return convertView;
 
@@ -43,7 +45,7 @@ public class MainSpinnerAdapter extends ArrayAdapter<String> {
 
         //此处text1是Spinner默认的用来显示文字的TextView
         TextView tv = (TextView) convertView.findViewById(android.R.id.text1);
-        tv.setText(mStringArray[position]);
+        tv.setText(mTagList.get(position));
         tv.setTextSize(18f);
         tv.setTextColor(Color.WHITE);
         return convertView;
