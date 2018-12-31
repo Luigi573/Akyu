@@ -1,10 +1,10 @@
 package com.white5703.akyuu.Utility;
 
+import com.white5703.akyuu.AkyuuApplication;
 import com.white5703.akyuu.Dao.Count;
 import com.white5703.akyuu.Dao.CountDao;
 import com.white5703.akyuu.Dao.Note;
 import com.white5703.akyuu.Dao.NoteDao;
-import com.white5703.akyuu.AkyuuApplication;
 
 import java.util.List;
 
