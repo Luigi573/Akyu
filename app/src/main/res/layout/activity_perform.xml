@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:autofit="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/colorLightGrey">
+    <me.grantland.widget.AutofitTextView
+        android:id="@+id/perform_textView_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:singleLine="false"
+        android:maxLines="16"
+        autofit:minTextSize="12sp"
+        android:textSize="40sp"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:background="@drawable/ripple_light_grey"
+        android:clickable="true"
+        android:focusable="true" />
+    <me.grantland.widget.AutofitTextView
+        android:id="@+id/perform_textView_hide"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:singleLine="false"
+        android:maxLines="8"
+        autofit:minTextSize="12sp"
+        android:textSize="40sp"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:background="@drawable/ripple_light_grey"
+        android:clickable="true"
+        android:focusable="true"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="12dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/perform_button_down"
+            android:layout_marginLeft="20dp"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_perform_down"/>
+
+        <Button
+            android:id="@+id/perform_button_up"
+            android:layout_marginLeft="20dp"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_perform_up"/>
+        <Button
+            android:id="@+id/perform_button_pre"
+            android:layout_marginLeft="20dp"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_perform_pre"/>
+        <Button
+            android:id="@+id/perform_button_next"
+            android:layout_marginLeft="20dp"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_perform_next"/>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

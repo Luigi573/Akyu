@@ -1,0 +1,7 @@
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:drawable="@drawable/ripple_secondary"/>
+    <item>
+        <bitmap android:src="@mipmap/ic_arrow_drop_down_white_48dp"/>
+    </item>
+</layer-list>

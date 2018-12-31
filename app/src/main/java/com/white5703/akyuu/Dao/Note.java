@@ -2,18 +2,20 @@ package com.white5703.akyuu.Dao;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.NotNull;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
-import com.white5703.akyuu.Dao.DaoSession;
-import com.white5703.akyuu.Dao.NoteDao;
 
 @Entity(active = true)
 public class Note {
     @Id(autoincrement = true)
     private Long id;
 
-    private String text;
+    private String content;
+
+    private String hided;
+
+    private String tag;
 
     @NotNull
     private int priority;
@@ -26,10 +28,12 @@ public class Note {
     @Generated(hash = 363862535)
     private transient NoteDao myDao;
 
-    @Generated(hash = 384474254)
-    public Note(Long id, String text, int priority) {
+    @Generated(hash = 669641182)
+    public Note(Long id, String content, String hided, String tag, int priority) {
         this.id = id;
-        this.text = text;
+        this.content = content;
+        this.hided = hided;
+        this.tag = tag;
         this.priority = priority;
     }
 
@@ -45,12 +49,28 @@ public class Note {
         this.id = id;
     }
 
-    public String getText() {
-        return this.text;
+    public String getContent() {
+        return this.content;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getHided() {
+        return this.hided;
+    }
+
+    public void setHided(String hided) {
+        this.hided = hided;
+    }
+
+    public String getTag() {
+        return this.tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public int getPriority() {
@@ -103,5 +123,4 @@ public class Note {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getNoteDao() : null;
     }
-
 }
