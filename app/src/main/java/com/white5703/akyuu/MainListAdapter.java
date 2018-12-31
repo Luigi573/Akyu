@@ -1,30 +1,28 @@
 package com.white5703.akyuu;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
 
 public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.InfoViewHolder> {
 
-    public static final int BUTTON_TYPE_DOWN = 0;
-    public static final int BUTTON_TYPE_UP = 1;
-    public static final int BUTTON_TYPE_DELETE = 2;
     private List<ItemInfo> itemInfoList;
 
-    private ButtonInterface buttonInterface;
+    private ListInterface listInterface;
 
     public MainListAdapter(List<ItemInfo> itemInfoList){
         this.itemInfoList = itemInfoList;
     }
 
-    public void buttonSetOnclick(ButtonInterface buttonInterface){
-        this.buttonInterface = buttonInterface;
+    public void listSetOnLongclick(ListInterface listInterface){
+        this.listInterface = listInterface;
     }
     @Override
     public InfoViewHolder onCreateViewHolder(ViewGroup parent,int viewType){
@@ -39,35 +37,17 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.InfoVi
         holder.vPriority.setText(itemInfo.priority);
         holder.vText.setText(Html.fromHtml(itemInfo.text));
 
-        holder.btnDown.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
-                if(buttonInterface!=null)
-                {
-                    buttonInterface.onClick(v,position,MainListAdapter.BUTTON_TYPE_DOWN);
+            public boolean onLongClick(View v) {
+                Log.v("Akyuu","OnLongClick() "+listInterface.toString());
+                if(listInterface != null){
+                    listInterface.onLongClick(v,position);
                 }
+                return false;
             }
         });
 
-        holder.btnUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(buttonInterface!=null)
-                {
-                    buttonInterface.onClick(v,position,MainListAdapter.BUTTON_TYPE_UP);
-                }
-            }
-        });
-
-        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(buttonInterface!=null)
-                {
-                    buttonInterface.onClick(v,position,MainListAdapter.BUTTON_TYPE_DELETE);
-                }
-            }
-        });
 
     }
 
@@ -76,23 +56,19 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.InfoVi
         return itemInfoList.size();
     }
 
-    public interface ButtonInterface{
-        public void onClick(View view, int position, int btnType);
+    public interface ListInterface{
+        public void onLongClick(View v, int position);
     }
 
     public class InfoViewHolder extends RecyclerView.ViewHolder{
+        protected CardView wCardView;
         protected TextView vPriority;
         protected TextView vText;
-        protected Button btnUp;
-        protected Button btnDown;
-        protected Button btnDelete;
         public InfoViewHolder(View itemView){
             super(itemView);
+            wCardView = itemView.findViewById(R.id.view_card);
             vPriority = itemView.findViewById(R.id.text_priority);
             vText = itemView.findViewById(R.id.my_text);
-            btnUp = itemView.findViewById(R.id.button_up);
-            btnDown = itemView.findViewById(R.id.button_down);
-            btnDelete = itemView.findViewById(R.id.button_delete);
 
         }
     }

@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         refreshItemList();
 
-        initButtonEvent();
+        initListEvent();
 
 
 
@@ -92,26 +92,42 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void initButtonEvent(){
-        adapter.buttonSetOnclick(new MainListAdapter.ButtonInterface() {
+    private void initListEvent(){
+        adapter.listSetOnLongclick(new MainListAdapter.ListInterface() {
             @Override
-            public void onClick(View view, int postion, int btnType) {
+            public void onLongClick(View view, final int postion) {
 //                Toast.makeText(MainActivity.this,postion+"",Toast.LENGTH_LONG).show();
                 CardView cardView = (CardView) mLayoutManager.findViewByPosition(postion);
-                TextView vPriority = cardView.findViewById(R.id.text_priority);
-                int nowPriority = Integer.parseInt(vPriority.getText().toString());
-                if (btnType == MainListAdapter.BUTTON_TYPE_UP && nowPriority != 9) {
-                    vPriority.setText((nowPriority + 1) + "");
-                    //increase priority
-                    DBTool.increasePriority(mList.get(postion).getId());
+                final TextView vPriority = cardView.findViewById(R.id.text_priority);
+                final int nowPriority = Integer.parseInt(vPriority.getText().toString());
 
-                } else if (btnType == MainListAdapter.BUTTON_TYPE_DOWN && nowPriority != 1) {
-                    vPriority.setText((nowPriority - 1) + "");
-                    //decrease priority
-                    DBTool.decreasePriority(mList.get(postion).getId());
-                } else if (btnType == MainListAdapter.BUTTON_TYPE_DELETE){
-                    DBTool.deleteNote(mList.get(postion).getId());
-                }
+                final String[] options = getResources().getStringArray(R.array.list_item_long_click_dialog);
+                AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+                        .setTitle(R.string.dialog_list_item_long_click_title)
+                        .setItems(options, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                    switch (which){
+                                        case 0:
+                                            if(nowPriority < R.integer.max_priority){
+                                                vPriority.setText((nowPriority + 1) + "");
+                                                DBTool.increasePriority(mList.get(postion).getId());
+                                            }
+                                            break;
+                                        case 1:
+                                            if(nowPriority > R.integer.min_priority){
+                                                vPriority.setText((nowPriority - 1) + "");
+                                                DBTool.decreasePriority(mList.get(postion).getId());
+                                            }
+                                            break;
+                                        case 2:
+                                            DBTool.deleteNote(mList.get(postion).getId());
+                                            break;
+                                    }
+                                    dialog.dismiss();
+                            }
+                        }).create();
+                dialog.show();
             }
         });
     }
@@ -167,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
         mList = genItemList();
         adapter = new MainListAdapter(mList);
         mRecyclerView.setAdapter(adapter);
-        initButtonEvent();
+        initListEvent();
     }
 
 
