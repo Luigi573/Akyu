@@ -1,9 +1,11 @@
 package com.white5703.akyuu;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
@@ -26,6 +28,8 @@ public class PerformActivity extends AppCompatActivity {
     int cur = 0; //当前在noteList中的位置
 
     String Tag;
+
+    int hideFlag = 1;
 
     AutofitTextView tvHide;
     AutofitTextView tvContent;
@@ -60,15 +64,41 @@ public class PerformActivity extends AppCompatActivity {
         initButtonEvent();
         initData(NextItem(Tag));
 
+        setHided();
 
+
+    }
+    private void setHided(){
+        tvHide.setBackground(getResources().getDrawable(R.drawable.ripple_grey));
+        tvHide.setText(R.string.performance_hint_hided);
+        hideFlag = 1;
+    }
+    private void toggleHideStatus(){
+        if(hideFlag == 1){
+            tvHide.setBackground(getResources().getDrawable(R.drawable.ripple_light_grey));
+            tvHide.setText(noteList.get(cur).getHided());
+            hideFlag = 0;
+        }else{
+            tvHide.setBackground(getResources().getDrawable(R.drawable.ripple_grey));
+            tvHide.setText(R.string.performance_hint_hided);
+            hideFlag = 1;
+        }
     }
 
     private void initButtonEvent() {
+        tvHide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleHideStatus();
+
+            }
+        });
+
         btnDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(noteList.get(cur).getId() == 999999L) return;
-                if(noteList.get(cur).getPriority() <= R.integer.min_priority){
+                if(noteList.get(cur).getPriority() <= getResources().getInteger(R.integer.min_priority)){
                     Toast toast = Toast.makeText(PerformActivity.this,null
                             ,Toast.LENGTH_SHORT);
                     toast.setText(R.string.performance_already_min_priority);
@@ -79,11 +109,28 @@ public class PerformActivity extends AppCompatActivity {
             }
         });
 
+        btnDown.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog dialog = new AlertDialog.Builder(PerformActivity.this)
+                        .setPositiveButton("Delete",new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                DBTool.deleteNote(noteList.get(cur).getId());
+                                dialog.dismiss();
+                            }
+                        })
+                        .create();
+                dialog.show();
+                return false;
+            }
+        });
+
         btnUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(noteList.get(cur).getId() == 999999L) return;
-                if(noteList.get(cur).getPriority() >= R.integer.max_priority){
+                if(noteList.get(cur).getPriority() >= getResources().getInteger(R.integer.max_priority)){
                     Toast toast = Toast.makeText(PerformActivity.this,null
                             ,Toast.LENGTH_SHORT);
                     toast.setText(R.string.performance_already_max_priority);
@@ -102,8 +149,10 @@ public class PerformActivity extends AppCompatActivity {
                             ,Toast.LENGTH_SHORT).show();
                     return;
                 }
+
                 cur--;
                 initData(noteList.get(cur));
+                setHided();
             }
         });
 
@@ -113,10 +162,14 @@ public class PerformActivity extends AppCompatActivity {
                 if(cur == noteList.size() - 1){
                     initData(NextItem(Tag));
                     cur++;
+                    setHided();
                     return;
                 }
+
                 cur++;
                 initData(noteList.get(cur));
+
+                setHided();
             }
         });
 
