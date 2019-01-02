@@ -1,7 +1,8 @@
 <resources>
     <string name="akyuu_app_name">Akyuu</string>
     <string name="dialog_add_title">Add</string>
-    <string name="dialog_add_hint_text">Text</string>
+    <string name="dialog_add_hint_content">Content</string>
+    <string name="dialog_add_hint_hide">Hide</string>
     <string name="dialog_add_hint_priority">Priority</string>
     <string name="dialog_add_button_cancel">Cancel</string>
     <string name="dialog_add_button_confirm">Confirm</string>
@@ -13,5 +14,8 @@
     <string name="performance_already_last">Already the last!</string>
     <string name="performance_already_max_priority">Already max priority</string>
     <string name="performance_already_min_priority">Already min priority</string>
+    <string name="performance_hint_hided">Hided</string>
+    <string name="activity_list_menu_title">Select Tag</string>
+    <string name="dialog_add_hint_tag">Tag</string>
 
 </resources>

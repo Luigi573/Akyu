@@ -22,6 +22,8 @@
         </activity>
 
         <activity android:name=".PerformActivity"/>
+
+        <activity android:name=".ItemListActivity"/>
     </application>
 
 </manifest>
