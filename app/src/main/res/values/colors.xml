@@ -18,5 +18,8 @@
     <color name="colorGrey">#808080</color>
     <color name="colorDarkGrey">#2F2F2F</color>
 
+    <color name="colorBlack">#DE000000</color>
+    <color name="colorBlackLight">#8A000000</color>
+    <color name="colorBlackSuperLight">#1F000000</color>
     <color name="colorWhite">#FFFFFF</color>
 </resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single" android:id="@+id/av" android:enabled="true" >
+
+        <item
+            android:id="@+id/perform_nav_item_up"
+            android:title="Increase Priority"
+            android:icon="@mipmap/ic_arrow_drop_up_black_48dp"/>
+
+        <item
+            android:id="@+id/perform_nav_item_down"
+            android:title="Decrease Priority"
+            android:icon="@mipmap/ic_arrow_drop_down_black_48dp"/>
+        <item
+            android:id="@+id/perform_nav_item_delete"
+            android:title="Delete Item"
+            android:icon="@mipmap/ic_delete_black_48dp"/>
+        <item
+            android:id="@+id/perform_nav_item_pre"
+            android:title="Previous Item"
+            android:icon="@mipmap/ic_chevron_left_black_48dp"/>
+        <item
+            android:id="@+id/perform_nav_item_next"
+            android:title="Next Item"
+            android:icon="@mipmap/ic_chevron_right_black_48dp"/>
+
+
+    </group>
+
+</menu>

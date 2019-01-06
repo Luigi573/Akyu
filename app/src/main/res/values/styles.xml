@@ -8,4 +8,41 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="perform_brief_textView">
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:background">@drawable/ripple_white</item>
+        <item name="android:textSize">@dimen/text_super_large</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <style name="perform_detail_textView_show">
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:background">@drawable/ripple_white</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:gravity">left</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <style name="perform_detail_textView_hide">
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:background">@drawable/ripple_grey</item>
+        <item name="android:text">@string/performance_hint_hided</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:textSize">56sp</item>
+    </style>
+
+    <style name="perform_fab_button">
+
+    </style>
+
 </resources>
