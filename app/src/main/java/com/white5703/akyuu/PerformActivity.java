@@ -53,7 +53,6 @@ public class PerformActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-
         mNavigationView = findViewById(R.id.perform_nav_view);
         mDrawerLayout = findViewById(R.id.perform_drawerLayout);
         tvBrief = findViewById(R.id.perform_textView_brief);
@@ -150,6 +149,7 @@ public class PerformActivity extends AppCompatActivity {
             }
         });
 
+
         tvDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,6 +158,7 @@ public class PerformActivity extends AppCompatActivity {
         });
 
         tvDetail.setOnLongClickListener(new View.OnLongClickListener() {
+
             @Override
             public boolean onLongClick(View v) {
                 String string = "Index: " + cur + " ," + "Tag: " + noteList.get(cur).getTag() + " ,"
