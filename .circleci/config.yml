@@ -4,6 +4,21 @@
 #
 version: 2
 jobs:
+    dependencies:
+        pre:
+        - mkdir -p "$ANDROID_HOME/licenses"
+        - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+        - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+
+
+        override:
+        - echo y | android update sdk --no-ui --filter "android-28"
+        - echo y | android update sdk --no-ui --filter "build-tools-28.0.3"
+        - echo y | android update sdk --no-ui --filter "extra-android-m2repository"
+        - echo y | android update sdk --no-ui --filter "extra-android-support"
+        - echo y | android update sdk --no-ui --filter "extra-google-m2repositor"
+        - ./gradlew dependencies || true
+
     build:
         docker:
         # specify the version you desire here
