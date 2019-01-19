@@ -1,4 +1,4 @@
-package com.white5703.akyuu;
+package com.white5703.akyuu.ui.activity;
 
 import android.content.Intent;
 import android.os.Build;
@@ -17,18 +17,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hippo.drawerlayout.DrawerLayout;
-import com.white5703.akyuu.Dao.Note;
-import com.white5703.akyuu.Utility.AkyuuUtility;
-import com.white5703.akyuu.Utility.DBTool;
+import com.white5703.akyuu.R;
+import com.white5703.akyuu.entity.Note;
+import com.white5703.akyuu.manager.DbManager;
+import com.white5703.akyuu.util.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PerformActivity extends AppCompatActivity {
-
     List<Note> noteList = new ArrayList<>();
     int cur = 0; //当前在noteList中的位置
-
     String Tag;
 
     int hideFlag = 1;
@@ -38,7 +37,6 @@ public class PerformActivity extends AppCompatActivity {
     FloatingActionButton mFab;
     TextView tvBrief;
     TextView tvDetail;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +62,7 @@ public class PerformActivity extends AppCompatActivity {
         Tag = intent.getStringExtra(MainActivity.MESSAGE_TAG);
 
         initEvents();
-        initData(NextItem(Tag));
+        initData(nextItem(Tag));
 
         setHided();
 
@@ -72,72 +70,87 @@ public class PerformActivity extends AppCompatActivity {
     }
 
     private void initEvents() {
+        mNavigationView.setNavigationItemSelectedListener(
+            new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    int maxPriority = getResources().getInteger(R.integer.max_priority);
+                    int minPriority = getResources().getInteger(R.integer.min_priority);
 
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.perform_nav_item_up:
-                        if(noteList.get(cur).getId() == 999999L) break;
-                        if(noteList.get(cur).getPriority() >= getResources().getInteger(R.integer.max_priority)){
-                            Toast toast = Toast.makeText(PerformActivity.this,null
-                                    ,Toast.LENGTH_SHORT);
-                            toast.setText(R.string.performance_already_max_priority);
-                            toast.show();
-                            break;
-                        }
-                        DBTool.increasePriority(noteList.get(cur).getId());
-                        break;
-                    case R.id.perform_nav_item_down:
-                        if(noteList.get(cur).getId() == 999999L) break;
-                        if(noteList.get(cur).getPriority() <= getResources().getInteger(R.integer.min_priority)){
-                            Toast toast = Toast.makeText(PerformActivity.this,null
-                                    ,Toast.LENGTH_SHORT);
-                            toast.setText(R.string.performance_already_min_priority);
-                            toast.show();
-                            break;
-                        }
-                        DBTool.decreasePriority(noteList.get(cur).getId());
-                        break;
-                    case R.id.perform_nav_item_delete:
-                        if(noteList.get(cur).getId() == 999999L) break;
-                        DBTool.deleteNote(noteList.get(cur).getId());
-                        break;
-                    case R.id.perform_nav_item_pre:
-                        if(cur == 0){
-                            Toast.makeText(PerformActivity.this,R.string.performance_already_first
-                                    ,Toast.LENGTH_SHORT).show();
-                            break;
-                        }
+                    switch (menuItem.getItemId()) {
+                        case R.id.perform_nav_item_up:
+                            if (noteList.get(cur).getId() == 999999L) {
+                                break;
+                            }
 
-                        cur--;
-                        initData(noteList.get(cur));
-                        setHided();
-                        break;
-                    case R.id.perform_nav_item_next:
-                        if(cur == noteList.size() - 1){
-                            initData(NextItem(Tag));
-                            cur++;
+                            if (noteList.get(cur).getPriority() >= maxPriority) {
+                                Toast toast = Toast.makeText(PerformActivity.this, null,
+                                    Toast.LENGTH_SHORT);
+                                toast.setText(R.string.performance_already_max_priority);
+                                toast.show();
+                                break;
+                            }
+                            DbManager.increasePriority(noteList.get(cur).getId());
+                            break;
+                        case R.id.perform_nav_item_down:
+                            if (noteList.get(cur).getId() == 999999L) {
+                                break;
+                            }
+                            if (noteList.get(cur).getPriority() <= minPriority) {
+                                Toast toast = Toast.makeText(PerformActivity.this, null,
+                                    Toast.LENGTH_SHORT);
+                                toast.setText(R.string.performance_already_min_priority);
+                                toast.show();
+                                break;
+                            }
+                            DbManager.decreasePriority(noteList.get(cur).getId());
+                            break;
+                        case R.id.perform_nav_item_delete:
+                            if (noteList.get(cur).getId() == 999999L) {
+                                break;
+                            }
+                            DbManager.deleteNote(noteList.get(cur).getId());
+                            break;
+                        case R.id.perform_nav_item_pre:
+                            if (cur == 0) {
+                                String noticeFirst = getResources()
+                                    .getString(R.string.performance_already_first);
+                                Toast.makeText(PerformActivity.this, noticeFirst,
+                                    Toast.LENGTH_SHORT).show();
+                                break;
+                            }
+
+                            cur--;
+                            initData(noteList.get(cur));
                             setHided();
                             break;
-                        }
+                        case R.id.perform_nav_item_next:
+                            if (cur == noteList.size() - 1) {
+                                initData(nextItem(Tag));
+                                cur++;
+                                setHided();
+                                break;
+                            }
 
-                        cur++;
-                        initData(noteList.get(cur));
-                        setHided();
-                        break;
+                            cur++;
+                            initData(noteList.get(cur));
+                            setHided();
+                            break;
+                        default:
+                            break;
+                    }
+                    mDrawerLayout.closeDrawers();
+                    menuItem.setChecked(false);
+                    return true;
                 }
-                mDrawerLayout.closeDrawers();
-                menuItem.setChecked(false);
-                return true;
             }
-        });
+        );
 
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(cur == noteList.size() - 1){
-                    initData(NextItem(Tag));
+                if (cur == noteList.size() - 1) {
+                    initData(nextItem(Tag));
                     cur++;
                     setHided();
                     return;
@@ -162,10 +175,10 @@ public class PerformActivity extends AppCompatActivity {
             @Override
             public boolean onLongClick(View v) {
                 String string = "Index: " + cur + " ," + "Tag: " + noteList.get(cur).getTag() + " ,"
-                        + "Priority: " + noteList.get(cur).getPriority();
+                      + "Priority: " + noteList.get(cur).getPriority();
                 //TODO: 长按修改
-                Toast toast = Toast.makeText(PerformActivity.this,null
-                        ,Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(PerformActivity.this,null,
+                    Toast.LENGTH_SHORT);
                 toast.setText(string);
                 toast.show();
                 return true;
@@ -175,21 +188,22 @@ public class PerformActivity extends AppCompatActivity {
 
     }
 
-    private void setHided(){
+    private void setHided() {
         tvDetail.setBackground(getResources().getDrawable(R.drawable.ripple_grey));
         tvDetail.setText(R.string.performance_hint_hided);
         tvDetail.setTextSize(56F);
         tvDetail.setGravity(Gravity.CENTER);
         hideFlag = 1;
     }
-    private void toggleHideStatus(){
-        if(hideFlag == 1){
+
+    private void toggleHideStatus() {
+        if (hideFlag == 1) {
             tvDetail.setBackground(getResources().getDrawable(R.drawable.ripple_light_grey));
             tvDetail.setText(noteList.get(cur).getHided());
             tvDetail.setTextSize(18F);
             tvDetail.setGravity(Gravity.LEFT);
             hideFlag = 0;
-        }else{
+        } else {
             tvDetail.setBackground(getResources().getDrawable(R.drawable.ripple_grey));
             tvDetail.setText(R.string.performance_hint_hided);
             tvDetail.setTextSize(56F);
@@ -199,40 +213,40 @@ public class PerformActivity extends AppCompatActivity {
     }
 
 
-    private void initData(Note note){
+    private void initData(Note note) {
         tvBrief.setText(note.getContent());
         tvDetail.setText(note.getHided());
     }
 
     //返回下一个随机到的Note并将其加入noteList
-    private Note NextItem(String Tag){
+    private Note nextItem(String Tag) {
         Note ret = null;
-        List<Note> allNote = DBTool.getNoteList(Tag);
-        if (allNote.isEmpty()){
+        List<Note> allNote = DbManager.getNoteList(Tag);
+        if (allNote.isEmpty()) {
             noteList.add(new Note(999999L,"Empty List!","Empty List!","Wrong",9));
             return new Note(999999L,"Empty List!","Empty List!","Wrong",9);
         }
         long noteCount = allNote.size();
         long prioritySum = getPrioritySum(allNote);
-        int miniumPriority = AkyuuUtility.getMiniumPriority(allNote);
+        int miniumPriority = CommonUtils.getMinimumPriority(allNote);
 
-        long randomnum = AkyuuUtility.genRandomNumber(miniumPriority, prioritySum);
+        long randomnum = CommonUtils.genRandomNumber(miniumPriority, prioritySum);
         long nowsum = 0;
         long nextsum = 0;
         for (int j = 0; j < noteCount; j++) {
             nowsum += allNote.get(j).getPriority();
-            if(j == noteCount - 1){
+            if (j == noteCount - 1) {
                 nextsum = nowsum;
-            }else {
-                nextsum = nowsum + allNote.get(j+1).getPriority();
+            } else {
+                nextsum = nowsum + allNote.get(j + 1).getPriority();
             }
 
             if (randomnum <= nowsum) {
                 ret = allNote.get(j);
                 noteList.add(ret);
                 break;
-            }else if (randomnum > nowsum && randomnum <= nextsum) {
-                ret = allNote.get(j+1);
+            } else if (randomnum <= nextsum) {
+                ret = allNote.get(j + 1);
                 noteList.add(ret);
                 break;
             }
@@ -241,9 +255,11 @@ public class PerformActivity extends AppCompatActivity {
 
     }
 
-    private long getPrioritySum(List<Note> list){
+    private long getPrioritySum(List<Note> list) {
         long sum = 0L;
-        for(int i = 0; i < list.size(); i++) sum += list.get(i).getPriority();
+        for (int i = 0; i < list.size(); i++) {
+            sum += list.get(i).getPriority();
+        }
         return sum;
     }
 

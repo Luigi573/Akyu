@@ -1,10 +1,10 @@
-package com.white5703.akyuu;
+package com.white5703.akyuu.app;
 
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.white5703.akyuu.Dao.DaoMaster;
-import com.white5703.akyuu.Dao.DaoSession;
+import com.white5703.akyuu.dao.DaoMaster;
+import com.white5703.akyuu.dao.DaoSession;
 
 public class AkyuuApplication extends Application {
     private static AkyuuApplication instance;
@@ -12,16 +12,14 @@ public class AkyuuApplication extends Application {
     private DaoMaster.DevOpenHelper mHelper;
     private SQLiteDatabase db;
     private DaoMaster mDaoMaster;
-    private DaoSession mDaoSeesion;
+    private DaoSession mDaoSession;
 
     @Override
-    public void onCreate(){
+    public void onCreate() {
         super.onCreate();
         instance = this;
 
         initDao();
-//        initRichTextView();
-//        Toast.makeText(this,"application created",Toast.LENGTH_SHORT).show();
     }
 
 
@@ -30,18 +28,18 @@ public class AkyuuApplication extends Application {
         mHelper = new DaoMaster.DevOpenHelper(this,"akyuu2_db",null);
         db = mHelper.getWritableDatabase();
         mDaoMaster = new DaoMaster(db);
-        mDaoSeesion = mDaoMaster.newSession();
+        mDaoSession = mDaoMaster.newSession();
     }
 
-    public DaoSession getDaoSession(){
-        return mDaoSeesion;
+    public DaoSession getDaoSession() {
+        return mDaoSession;
     }
 
-    public SQLiteDatabase getDb(){
+    public SQLiteDatabase getDb() {
         return db;
     }
 
-    public static AkyuuApplication getInstance(){
+    public static AkyuuApplication getInstance() {
         return instance;
     }
 }

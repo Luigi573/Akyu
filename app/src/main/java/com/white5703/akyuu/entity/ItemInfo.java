@@ -1,4 +1,4 @@
-package com.white5703.akyuu;
+package com.white5703.akyuu.entity;
 
 public class ItemInfo {
     public String getText() {
@@ -29,10 +29,11 @@ public class ItemInfo {
         this.id = id;
     }
 
-    public ItemInfo(String text, String priority,long id){
+    public ItemInfo(String text, String priority,long id) {
         this.text = text;
         this.priority = priority;
         this.id = id;
     }
+
     public ItemInfo(){}
 }

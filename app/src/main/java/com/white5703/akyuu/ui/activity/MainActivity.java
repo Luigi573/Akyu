@@ -1,4 +1,4 @@
-package com.white5703.akyuu;
+package com.white5703.akyuu.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,13 +16,15 @@ import android.widget.Spinner;
 
 import com.roughike.swipeselector.SwipeItem;
 import com.roughike.swipeselector.SwipeSelector;
-import com.white5703.akyuu.Utility.DBTool;
+import com.white5703.akyuu.R;
+import com.white5703.akyuu.manager.DbManager;
+import com.white5703.akyuu.ui.adapter.MainSpinnerAdapter;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public final static String MESSAGE_TAG = "com.white5703.akyuu.MESSAGE_TAG";
+    public static final  String MESSAGE_TAG = "com.white5703.akyuu.MESSAGE_TAG";
 
     List<String> list;
     MainSpinnerAdapter adapter;
@@ -44,11 +46,11 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-//        DBTool.clearTableNote();
-//        DBTool.insertNote("Test1","Test1","测试",1);
-//        DBTool.insertNote("Test9","Test9","测试",9);
-//        DBTool.insertNote("Tset1","Tset1","试测",1);
-//        DBTool.insertNote("Tset9","Tset9","试测",9);
+        //DbManager.clearTableNote();
+        //DbManager.insertNote("Test1","Test1","测试",1);
+        //DbManager.insertNote("Test9","Test9","测试",9);
+        //DbManager.insertNote("Tset1","Tset1","试测",1);
+        //DbManager.insertNote("Tset9","Tset9","试测",9);
 
         initSpinnerData();
 
@@ -64,15 +66,15 @@ public class MainActivity extends AppCompatActivity {
         initSpinnerData();
     }
 
-    private void initSpinnerData(){
-        adapter = new MainSpinnerAdapter(this,DBTool.getTagList());
+    private void initSpinnerData() {
+        adapter = new MainSpinnerAdapter(this,DbManager.getTagList());
 
         Spinner spinner = findViewById(R.id.main_spinner);
         spinner.setAdapter(adapter);
     }
 
 
-    private void initLayout(){
+    private void initLayout() {
         btnStart = findViewById(R.id.activity_main_start);
         btnList = findViewById(R.id.activity_main_list);
         btnSetting = findViewById(R.id.activity_main_setting);
@@ -127,27 +129,28 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setView(view)
                 .setTitle(R.string.dialog_add_title)
-                .setNegativeButton(R.string.dialog_add_button_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .setPositiveButton(R.string.dialog_add_button_confirm, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String content = etContent.getText().toString();
-                        String hide = etHide.getText().toString();
-                        String tag = etTag.getText().toString();
-                        SwipeItem swipeItem = slPriority.getSelectedItem();
-                        int priority = (int)swipeItem.value;
-//                        Toast.makeText(MainActivity.this, text + " " + priority, Toast.LENGTH_SHORT).show();
-
-                        DBTool.insertNote(content,hide,tag,priority);
-                        initSpinnerData();
-                        dialog.dismiss();
-                    }
-                }).create();
+                .setNegativeButton(R.string.dialog_add_button_cancel,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                .setPositiveButton(R.string.dialog_add_button_confirm,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String content = etContent.getText().toString();
+                            String hide = etHide.getText().toString();
+                            String tag = etTag.getText().toString();
+                            SwipeItem swipeItem = slPriority.getSelectedItem();
+                            int priority = (int)swipeItem.value;
+                            DbManager.insertNote(content,hide,tag,priority);
+                            initSpinnerData();
+                            dialog.dismiss();
+                        }
+                    })
+                .create();
         dialog.show();
 
 

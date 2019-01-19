@@ -1,4 +1,4 @@
-package com.white5703.akyuu.Dao;
+package com.white5703.akyuu.dao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

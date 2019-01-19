@@ -1,4 +1,4 @@
-package com.white5703.akyuu;
+package com.white5703.akyuu.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.white5703.akyuu.R;
 import java.util.List;
 
 public class ItemListMenuAdapter extends RecyclerView.Adapter<ItemListMenuAdapter.MenuItemViewHolder> {

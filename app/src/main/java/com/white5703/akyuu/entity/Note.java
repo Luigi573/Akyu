@@ -1,10 +1,12 @@
-package com.white5703.akyuu.Dao;
+package com.white5703.akyuu.entity;
 
+import com.white5703.akyuu.dao.DaoSession;
+import com.white5703.akyuu.dao.NoteDao;
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.NotNull;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
 
 @Entity(active = true)
 public class Note {

@@ -1,4 +1,4 @@
-package com.white5703.akyuu;
+package com.white5703.akyuu.ui.activity;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -14,7 +14,9 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.hippo.drawerlayout.DrawerLayout;
-import com.white5703.akyuu.Utility.DBTool;
+import com.white5703.akyuu.R;
+import com.white5703.akyuu.manager.DbManager;
+import com.white5703.akyuu.ui.adapter.ItemListMenuAdapter;
 
 import java.util.List;
 
@@ -26,8 +28,9 @@ public class ItemListActivity extends AppCompatActivity {
     ItemListMenuAdapter adapter;
 
     LinearLayoutManager mLayoutManager;
+
     @Override
-    public void onCreate(Bundle saveInstanceState){
+    public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -50,7 +53,7 @@ public class ItemListActivity extends AppCompatActivity {
     private void initMenuData() {
         Log.v("Akyuu","initMenuData()");
         mMenuList.setLayoutManager(new LinearLayoutManager(this));
-        List<String> tags = DBTool.getTagList();
+        List<String> tags = DbManager.getTagList();
         adapter = new ItemListMenuAdapter(tags);
         mMenuList.setAdapter(adapter);
     }

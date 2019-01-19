@@ -1,4 +1,4 @@
-package com.white5703.akyuu;
+package com.white5703.akyuu.ui.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -13,6 +13,7 @@ import java.util.List;
 public class MainSpinnerAdapter extends ArrayAdapter<String> {
     private Context mContext;
     private List<String> mTagList;
+
     public MainSpinnerAdapter(Context context, List<String> tagList) {
         super(context, android.R.layout.simple_spinner_item, tagList);
         mContext = context;
@@ -24,7 +25,8 @@ public class MainSpinnerAdapter extends ArrayAdapter<String> {
         //修改Spinner展开后的字体颜色
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
-            convertView = inflater.inflate(android.R.layout.simple_spinner_dropdown_item, parent,false);
+            convertView = inflater.inflate(android.R.layout.simple_spinner_dropdown_item, parent,
+                false);
         }
 
         //此处text1是Spinner默认的用来显示文字的TextView
