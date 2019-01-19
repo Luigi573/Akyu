@@ -1,5 +1,6 @@
 package com.white5703.akyuu.ui.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,57 +11,60 @@ import android.widget.TextView;
 import com.white5703.akyuu.R;
 import java.util.List;
 
-public class ItemListMenuAdapter extends RecyclerView.Adapter<ItemListMenuAdapter.MenuItemViewHolder> {
+public class ItemListMenuAdapter
+    extends RecyclerView.Adapter<ItemListMenuAdapter.MenuItemViewHolder> {
 
     private List<String> menuItemList;
 
-    private onClickInterface onClickInterface;
+    private OnClickInterface onClickInterface;
 
-    public ItemListMenuAdapter(List<String> menuItemList){
+    public ItemListMenuAdapter(List<String> menuItemList) {
         this.menuItemList = menuItemList;
     }
 
-    public void setOnClickListener(onClickInterface onClickInterface){
+    public void setOnClickListener(OnClickInterface onClickInterface) {
         this.onClickInterface = onClickInterface;
     }
-    @Override
-    public MenuItemViewHolder onCreateViewHolder(ViewGroup parent,int viewType){
+
+    @NonNull @Override
+    public MenuItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent,int viewType) {
         Log.v("Akyuu","onCreateViewHolder");
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_menu_item
-                ,parent,false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_menu_item,
+            parent,false);
         return new MenuItemViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(MenuItemViewHolder holder, final int position){
+    public void onBindViewHolder(@NonNull final MenuItemViewHolder holder, final int position) {
         Log.v("Akyuu","OnBindViewHolder");
-        String item = menuItemList.get(position);
+        String item = menuItemList.get(holder.getAdapterPosition());
 
         holder.vText.setText(item);
 
         holder.vText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Log.v("Akyuu","OnLongClick() "+listInterface.toString());
-                if(onClickInterface != null){
-                    onClickInterface.onClick(v,position);
+                //Log.v("Akyuu","OnLongClick() "+listInterface.toString());
+                if (onClickInterface != null) {
+                    onClickInterface.onClick(v,holder.getAdapterPosition());
                 }
             }
         });
     }
 
     @Override
-    public int getItemCount(){
+    public int getItemCount() {
         return menuItemList.size();
     }
 
-    public interface onClickInterface{
+    public interface OnClickInterface {
         public void onClick(View v, int position);
     }
 
-    public class MenuItemViewHolder extends RecyclerView.ViewHolder{
-        protected TextView vText;
-        public MenuItemViewHolder(View itemView){
+    class MenuItemViewHolder extends RecyclerView.ViewHolder {
+        TextView vText;
+
+        MenuItemViewHolder(View itemView) {
             super(itemView);
             vText = itemView.findViewById(R.id.list_menu_item_textView);
         }
