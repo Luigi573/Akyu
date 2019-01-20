@@ -1,22 +1,19 @@
 language: android
 android:
-    components:
-    - build-tools-28.0.3
-    - android-28
-    - extra-android-m2repository
-
+  components:
+  - build-tools-28.0.3
+  - android-28
+  - extra-android-m2repository
 before_script:
 - chmod +x gradlew
-
 before_install:
-- openssl aes-256-cbc -K $encrypted_6567202a88e7_key -iv $encrypted_6567202a88e7_iv
-    -in akyuu.jks.enc -out keys/akyuu.jks -d
+- openssl aes-256-cbc -K $encrypted_75725de5f0b1_key -iv $encrypted_75725de5f0b1_iv
+  -in akyuu.jks.enc -out keys/akyuu.jks -d
 - gem install fir-cli
-
 script:
 - ./gradlew clean
 - ./gradlew build
 - ./gradlew assembleRelease
-
 after_deploy:
-- fir p app/build/outputs/apk/app-release.apk -T $FIR_TOKEN -c "`git cat-file tag $TRAVIS_TAG`"
+- fir p app/build/outputs/apk/app-release.apk -T $FIR_TOKEN -c "`git cat-file tag
+  $TRAVIS_TAG`"
