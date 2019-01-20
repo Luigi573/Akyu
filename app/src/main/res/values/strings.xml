@@ -18,4 +18,9 @@
     <string name="activity_list_menu_title">Select Tag</string>
     <string name="dialog_add_hint_tag">Tag</string>
 
+    <string name="list_item_hint_title">Title</string>
+    <string name="list_item_hint_detail">Detail</string>
+    <string name="list_menu_select_by_tag">Select by tag</string>
+    <string name="list_menu_order_by_time">Order by time</string>
+
 </resources>

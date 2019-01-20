@@ -15,14 +15,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.hippo.drawerlayout.DrawerLayout;
 import com.white5703.akyuu.R;
 import com.white5703.akyuu.entity.Note;
 import com.white5703.akyuu.manager.DbManager;
 import com.white5703.akyuu.util.CommonUtils;
-
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PerformActivity extends AppCompatActivity {
@@ -199,7 +198,7 @@ public class PerformActivity extends AppCompatActivity {
     private void toggleHideStatus() {
         if (hideFlag == 1) {
             tvDetail.setBackground(getResources().getDrawable(R.drawable.ripple_light_grey));
-            tvDetail.setText(noteList.get(cur).getHided());
+            tvDetail.setText(noteList.get(cur).getDetail());
             tvDetail.setTextSize(18F);
             tvDetail.setGravity(Gravity.LEFT);
             hideFlag = 0;
@@ -214,17 +213,20 @@ public class PerformActivity extends AppCompatActivity {
 
 
     private void initData(Note note) {
-        tvBrief.setText(note.getContent());
-        tvDetail.setText(note.getHided());
+        tvBrief.setText(note.getBrief());
+        tvDetail.setText(note.getDetail());
     }
 
     //返回下一个随机到的Note并将其加入noteList
+    @SuppressWarnings("unchecked")
     private Note nextItem(String Tag) {
         Note ret = null;
         List<Note> allNote = DbManager.getNoteList(Tag);
         if (allNote.isEmpty()) {
-            noteList.add(new Note(999999L,"Empty List!","Empty List!","Wrong",9));
-            return new Note(999999L,"Empty List!","Empty List!","Wrong",9);
+            noteList.add(new Note(999999L, "Empty List!", "Empty List!", "Wrong",
+                9, new Date()));
+            return new Note(999999L, "Empty List!", "Empty List!", "Wrong",
+                9, new Date());
         }
         long noteCount = allNote.size();
         long prioritySum = getPrioritySum(allNote);

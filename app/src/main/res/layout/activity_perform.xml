@@ -4,7 +4,7 @@
     android:id="@+id/perform_drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:fab="http://schemas.android.com/tools">
+    >
     <LinearLayout
         android:id="@+id/perform_linearLayout"
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
                 >
                 <TextView
                     android:id="@+id/perform_textView_brief"
-                    style="@style/perform_brief_textView"
+                    style="@style/perform_brief_tv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="测试"/>
@@ -44,7 +44,7 @@
 
             <TextView
                 android:id="@+id/perform_textView_detail"
-                style="@style/perform_detail_textView_show"
+                style="@style/perform_detail_tv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"

@@ -1,8 +1,10 @@
 package com.white5703.akyuu.util;
 
 import com.white5703.akyuu.entity.Note;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class CommonUtils {
@@ -19,7 +21,7 @@ public class CommonUtils {
     }
 
     /**
-     * 获取所传入List<Note>中的最小权值
+     * 获取所传入List中的最小权值
      * @param list
      * @return 1~9
      */
@@ -32,5 +34,20 @@ public class CommonUtils {
             }
         }
         return res;
+    }
+
+    /**
+     * 将Date格式化为 yyyy-MM-dd HH:mm:ss
+     */
+    public static String formatDate(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+        return formatter.format(date);
+    }
+
+    /**
+     * list转array
+     */
+    public static String[] listToArray(List<String> list) {
+        return list.toArray(new String[0]);
     }
 }

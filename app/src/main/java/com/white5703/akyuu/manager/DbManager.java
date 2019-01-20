@@ -4,6 +4,7 @@ import com.white5703.akyuu.app.AkyuuApplication;
 import com.white5703.akyuu.dao.NoteDao;
 import com.white5703.akyuu.entity.Note;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.greenrobot.greendao.query.Query;
 
@@ -13,12 +14,13 @@ public class DbManager {
 
     private static NoteDao mNoteDao = AkyuuApplication.getInstance().getDaoSession().getNoteDao();
 
-    public static void insertNote(String content,String hided,String tag,int priority) {
+    public static void insertNote(String brief, String detail, String tag, int priority) {
         Note note = new Note();
-        note.setContent(content);
-        note.setHided(hided);
+        note.setBrief(brief);
+        note.setDetail(detail);
         note.setPriority(priority);
         note.setTag(tag);
+        note.setUpdatetime(new Date());
         mNoteDao.insert(note);
     }
 
@@ -67,6 +69,4 @@ public class DbManager {
         }
         return listTag;
     }
-
-
 }

@@ -2,6 +2,7 @@ package com.white5703.akyuu.entity;
 
 import com.white5703.akyuu.dao.DaoSession;
 import com.white5703.akyuu.dao.NoteDao;
+import java.util.Date;
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -13,14 +14,16 @@ public class Note {
     @Id(autoincrement = true)
     private Long id;
 
-    private String content;
+    private String brief;
 
-    private String hided;
+    private String detail;
 
     private String tag;
 
     @NotNull
     private int priority;
+
+    private Date updatetime;
 
     /** Used to resolve relations */
     @Generated(hash = 2040040024)
@@ -30,13 +33,15 @@ public class Note {
     @Generated(hash = 363862535)
     private transient NoteDao myDao;
 
-    @Generated(hash = 669641182)
-    public Note(Long id, String content, String hided, String tag, int priority) {
+    @Generated(hash = 2121453218)
+    public Note(Long id, String brief, String detail, String tag, int priority,
+        Date updatetime) {
         this.id = id;
-        this.content = content;
-        this.hided = hided;
+        this.brief = brief;
+        this.detail = detail;
         this.tag = tag;
         this.priority = priority;
+        this.updatetime = updatetime;
     }
 
     @Generated(hash = 1272611929)
@@ -51,21 +56,6 @@ public class Note {
         this.id = id;
     }
 
-    public String getContent() {
-        return this.content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getHided() {
-        return this.hided;
-    }
-
-    public void setHided(String hided) {
-        this.hided = hided;
-    }
 
     public String getTag() {
         return this.tag;
@@ -124,5 +114,29 @@ public class Note {
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getNoteDao() : null;
+    }
+
+    public Date getUpdatetime() {
+        return this.updatetime;
+    }
+
+    public void setUpdatetime(Date updatetime) {
+        this.updatetime = updatetime;
+    }
+
+    public String getDetail() {
+        return this.detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public String getBrief() {
+        return this.brief;
+    }
+
+    public void setBrief(String brief) {
+        this.brief = brief;
     }
 }

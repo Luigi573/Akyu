@@ -8,8 +8,8 @@ android {
         applicationId "com.white5703.akyuu"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 6
-        versionName "1.9.1"
+        versionCode 7
+        versionName "1.9.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

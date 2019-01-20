@@ -8,7 +8,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="perform_brief_textView">
+    <style name="app_tv_normal">
+        <item name="android:fontFamily">@font/notosans_medium</item>
+    </style>
+
+    <style name="app_tv_italic">
+        <item name="android:fontFamily">@font/notosans_medinum_italic</item>
+    </style>
+
+    <style name="perform_brief_tv" parent="app_tv_normal">
         <item name="android:layout_marginLeft">8dp</item>
         <item name="android:layout_marginRight">8dp</item>
         <item name="android:background">@drawable/ripple_white</item>
@@ -19,7 +27,7 @@
         <item name="android:focusable">true</item>
     </style>
 
-    <style name="perform_detail_textView_show">
+    <style name="perform_detail_tv" parent="app_tv_normal">
         <item name="android:layout_marginLeft">8dp</item>
         <item name="android:layout_marginRight">8dp</item>
         <item name="android:background">@drawable/ripple_white</item>
@@ -30,7 +38,7 @@
         <item name="android:focusable">true</item>
     </style>
 
-    <style name="perform_detail_textView_hide">
+    <style name="perform_detail_textView_hide" parent="app_tv_normal">
         <item name="android:layout_marginLeft">8dp</item>
         <item name="android:layout_marginRight">8dp</item>
         <item name="android:background">@drawable/ripple_grey</item>
@@ -41,8 +49,24 @@
         <item name="android:textSize">56sp</item>
     </style>
 
-    <style name="perform_fab_button">
-
+    <style name="list_item_tv_hint" parent="app_tv_normal">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">@dimen/text_medium</item>
     </style>
+
+    <style name="list_item_tv_content" parent="app_tv_normal">
+
+        <item name="android:textColor">@color/colorBlackLight</item>
+        <item name="android:textSize">@dimen/text_little_small</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="list_item_tv_tag" parent="app_tv_italic">
+        <item name="android:textColor">@color/colorBlackLight</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
 
 </resources>
