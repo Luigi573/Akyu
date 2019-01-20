@@ -1,5 +1,7 @@
 *.iml
 .gradle
+gradle.properties
+/keys/akyuu.jks
 /local.properties
 /.idea/caches/build_file_checksums.ser
 /.idea/libraries
