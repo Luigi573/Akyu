@@ -2,7 +2,6 @@ package com.white5703.akyuu.app;
 
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.white5703.akyuu.dao.DaoMaster;
 import com.white5703.akyuu.dao.DaoSession;
 
@@ -20,6 +19,8 @@ public class AkyuuApplication extends Application {
         instance = this;
 
         initDao();
+
+        //DbManager.insertNote("测试","测试","测试",5,"中文测试1111");
     }
 
 

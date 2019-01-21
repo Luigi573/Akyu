@@ -17,17 +17,6 @@ public class NoteDao extends AbstractDao<Note, Long> {
 
     public static final String TABLENAME = "NOTE";
 
-    private DaoSession daoSession;
-
-    public NoteDao(DaoConfig config) {
-        super(config);
-    }
-
-    public NoteDao(DaoConfig config, DaoSession daoSession) {
-        super(config, daoSession);
-        this.daoSession = daoSession;
-    }
-
     /** Creates the underlying database table. */
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
@@ -37,13 +26,19 @@ public class NoteDao extends AbstractDao<Note, Long> {
             "\"DETAIL\" TEXT," + // 2: detail
                 "\"TAG\" TEXT," + // 3: tag
             "\"PRIORITY\" INTEGER NOT NULL ," + // 4: priority
-            "\"UPDATETIME\" INTEGER);"); // 5: updatetime
+            "\"UPDATETIME\" INTEGER," + // 5: updatetime
+            "\"REFERENCE\" TEXT);"); // 6: reference
     }
 
-    /** Drops the underlying database table. */
-    public static void dropTable(Database db, boolean ifExists) {
-        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"NOTE\"";
-        db.execSQL(sql);
+    private DaoSession daoSession;
+
+    public NoteDao(DaoConfig config) {
+        super(config);
+    }
+
+    public NoteDao(DaoConfig config, DaoSession daoSession) {
+        super(config, daoSession);
+        this.daoSession = daoSession;
     }
 
     @Override
@@ -75,6 +70,17 @@ public class NoteDao extends AbstractDao<Note, Long> {
         if (updatetime != null) {
             stmt.bindLong(6, updatetime.getTime());
         }
+
+        String reference = entity.getReference();
+        if (reference != null) {
+            stmt.bindString(7, reference);
+        }
+    }
+
+    /** Drops the underlying database table. */
+    public static void dropTable(Database db, boolean ifExists) {
+        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"NOTE\"";
+        db.execSQL(sql);
     }
 
     @Override
@@ -106,20 +112,11 @@ public class NoteDao extends AbstractDao<Note, Long> {
         if (updatetime != null) {
             stmt.bindLong(6, updatetime.getTime());
         }
-    }
 
-    @Override
-    public Note readEntity(Cursor cursor, int offset) {
-        Note entity = new Note( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // brief
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // detail
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // tag
-            cursor.getInt(offset + 4), // priority
-            cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5))
-            // updatetime
-        );
-        return entity;
+        String reference = entity.getReference();
+        if (reference != null) {
+            stmt.bindString(7, reference);
+        }
     }
 
     @Override
@@ -131,7 +128,22 @@ public class NoteDao extends AbstractDao<Note, Long> {
     @Override
     public Long readKey(Cursor cursor, int offset) {
         return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
-    }    
+    }
+
+    @Override
+    public Note readEntity(Cursor cursor, int offset) {
+        Note entity = new Note( //
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // brief
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // detail
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // tag
+            cursor.getInt(offset + 4), // priority
+            cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)),
+            // updatetime
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // reference
+        );
+        return entity;
+    }
 
     @Override
     public void readEntity(Cursor cursor, Note entity, int offset) {
@@ -142,8 +154,9 @@ public class NoteDao extends AbstractDao<Note, Long> {
         entity.setPriority(cursor.getInt(offset + 4));
         entity.setUpdatetime(
             cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)));
+        entity.setReference(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
     }
-
+     
     /**
      * Properties of entity Note.<br/>
      * Can be used for QueryBuilder and for referencing column names.
@@ -158,6 +171,8 @@ public class NoteDao extends AbstractDao<Note, Long> {
             new Property(4, int.class, "priority", false, "PRIORITY");
         public final static Property Updatetime =
             new Property(5, java.util.Date.class, "updatetime", false, "UPDATETIME");
+        public final static Property Reference =
+            new Property(6, String.class, "reference", false, "REFERENCE");
     }
     
     @Override

@@ -14,13 +14,15 @@ public class DbManager {
 
     private static NoteDao mNoteDao = AkyuuApplication.getInstance().getDaoSession().getNoteDao();
 
-    public static void insertNote(String brief, String detail, String tag, int priority) {
+    public static void insertNote(String brief, String detail, String tag, int priority,
+        String reference) {
         Note note = new Note();
         note.setBrief(brief);
         note.setDetail(detail);
         note.setPriority(priority);
         note.setTag(tag);
         note.setUpdatetime(new Date());
+        note.setReference(reference);
         mNoteDao.insert(note);
     }
 
@@ -30,13 +32,13 @@ public class DbManager {
 
     public static void increasePriority(long id) {
         Note note = mNoteDao.loadByRowId(id);
-        note.setPriority(note.getPriority() + 1);
+        note.setPriority(note.getPriority() + 2);
         mNoteDao.save(note);
     }
 
     public static void decreasePriority(long id) {
         Note note = mNoteDao.loadByRowId(id);
-        note.setPriority(note.getPriority() - 1);
+        note.setPriority(note.getPriority() - 2);
         mNoteDao.save(note);
     }
 

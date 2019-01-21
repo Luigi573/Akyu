@@ -22,4 +22,11 @@
     <color name="colorBlackLight">#8A000000</color>
     <color name="colorBlackSuperLight">#1F000000</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorWhite2">#FAFAFA</color>
+
+    <color name="colorPriority1">#ADD68A</color>
+    <color name="colorPriority3">#72BE44</color>
+    <color name="colorPriority5">#FEF102</color>
+    <color name="colorPriority7">#F58225</color>
+    <color name="colorPriority9">#EE1C25</color>
 </resources>

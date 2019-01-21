@@ -13,13 +13,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Spinner;
-
 import com.roughike.swipeselector.SwipeItem;
 import com.roughike.swipeselector.SwipeSelector;
 import com.white5703.akyuu.R;
 import com.white5703.akyuu.manager.DbManager;
 import com.white5703.akyuu.ui.adapter.MainSpinnerAdapter;
-
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -145,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                             String tag = etTag.getText().toString();
                             SwipeItem swipeItem = slPriority.getSelectedItem();
                             int priority = (int)swipeItem.value;
-                            DbManager.insertNote(content,hide,tag,priority);
+                            DbManager.insertNote(content, hide, tag, priority, "");
                             initSpinnerData();
                             dialog.dismiss();
                         }

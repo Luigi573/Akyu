@@ -1,6 +1,7 @@
 package com.white5703.akyuu.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +9,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
+import android.text.style.UnderlineSpan;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +31,7 @@ import com.white5703.akyuu.util.CommonUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class PerformActivity extends AppCompatActivity {
     List<Note> noteList = new ArrayList<>();
@@ -36,6 +45,7 @@ public class PerformActivity extends AppCompatActivity {
     FloatingActionButton mFab;
     TextView tvBrief;
     TextView tvDetail;
+    TextView tvNavFooter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +64,9 @@ public class PerformActivity extends AppCompatActivity {
         mDrawerLayout = findViewById(R.id.perform_drawerLayout);
         tvBrief = findViewById(R.id.perform_textView_brief);
         tvDetail = findViewById(R.id.perform_textView_detail);
+        tvNavFooter = findViewById(R.id.perform_nav_footer_tv);
         mFab = findViewById(R.id.perform_fab_next);
+
 
 
         Intent intent = getIntent();
@@ -73,6 +85,7 @@ public class PerformActivity extends AppCompatActivity {
             new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
                     int maxPriority = getResources().getInteger(R.integer.max_priority);
                     int minPriority = getResources().getInteger(R.integer.min_priority);
 
@@ -90,6 +103,7 @@ public class PerformActivity extends AppCompatActivity {
                                 break;
                             }
                             DbManager.increasePriority(noteList.get(cur).getId());
+                            initData(noteList.get(cur));
                             break;
                         case R.id.perform_nav_item_down:
                             if (noteList.get(cur).getId() == 999999L) {
@@ -103,6 +117,7 @@ public class PerformActivity extends AppCompatActivity {
                                 break;
                             }
                             DbManager.decreasePriority(noteList.get(cur).getId());
+                            initData(noteList.get(cur));
                             break;
                         case R.id.perform_nav_item_delete:
                             if (noteList.get(cur).getId() == 999999L) {
@@ -123,17 +138,7 @@ public class PerformActivity extends AppCompatActivity {
                             initData(noteList.get(cur));
                             setHided();
                             break;
-                        case R.id.perform_nav_item_next:
-                            if (cur == noteList.size() - 1) {
-                                initData(nextItem(Tag));
-                                cur++;
-                                setHided();
-                                break;
-                            }
-
-                            cur++;
-                            initData(noteList.get(cur));
-                            setHided();
+                        case R.id.perform_nav_item_edit:
                             break;
                         default:
                             break;
@@ -185,6 +190,7 @@ public class PerformActivity extends AppCompatActivity {
         });
 
 
+
     }
 
     private void setHided() {
@@ -215,6 +221,7 @@ public class PerformActivity extends AppCompatActivity {
     private void initData(Note note) {
         tvBrief.setText(note.getBrief());
         tvDetail.setText(note.getDetail());
+        tvNavFooter.setText(buildNavFooterText(note));
     }
 
     //返回下一个随机到的Note并将其加入noteList
@@ -224,9 +231,9 @@ public class PerformActivity extends AppCompatActivity {
         List<Note> allNote = DbManager.getNoteList(Tag);
         if (allNote.isEmpty()) {
             noteList.add(new Note(999999L, "Empty List!", "Empty List!", "Wrong",
-                9, new Date()));
+                9, new Date(), "null"));
             return new Note(999999L, "Empty List!", "Empty List!", "Wrong",
-                9, new Date());
+                9, new Date(), "null");
         }
         long noteCount = allNote.size();
         long prioritySum = getPrioritySum(allNote);
@@ -263,6 +270,105 @@ public class PerformActivity extends AppCompatActivity {
             sum += list.get(i).getPriority();
         }
         return sum;
+    }
+
+    private int getPriorityColor(int priority) {
+        switch (priority) {
+            case 1:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    return getColor(R.color.colorPriority1);
+                }
+                break;
+            case 3:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    return getColor(R.color.colorPriority3);
+                }
+                break;
+            case 5:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    return getColor(R.color.colorPriority5);
+                }
+                break;
+            case 7:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    return getColor(R.color.colorPriority7);
+                }
+                break;
+            case 9:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    return getColor(R.color.colorPriority9);
+                }
+                break;
+            default:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    return getColor(R.color.colorBlack);
+                }
+                break;
+        }
+
+        return 0;
+    }
+
+    private SpannableStringBuilder buildNavFooterText(Note note) {
+        SpannableString idStr =
+            new SpannableString(String.format(Locale.CHINA, "No.%d", note.getId()));
+        idStr.setSpan(
+            new AbsoluteSizeSpan(getResources().getDimensionPixelSize(R.dimen.text_medium)),
+            3, idStr.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+
+        SpannableString priorityStr =
+            new SpannableString(String.format(Locale.CHINA, "Priority:%d", note.getPriority()));
+        priorityStr.setSpan(
+            new AbsoluteSizeSpan(getResources().getDimensionPixelSize(R.dimen.text_medium)),
+            9, priorityStr.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        priorityStr.setSpan(new ForegroundColorSpan(getPriorityColor(note.getPriority())),
+            9, priorityStr.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+
+        SpannableString tagStr = new SpannableString(note.getTag());
+        tagStr.setSpan(new UnderlineSpan(), 0, tagStr.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        tagStr.setSpan(new StyleSpan(Typeface.BOLD_ITALIC), 0, tagStr.length(),
+            Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+
+        SpannableString refStr = new SpannableString("");
+        boolean flag = false;
+        if (!(note.getReference() == null || note.getReference().equals("")
+            || note.getReference().equals("null"))) {
+            flag = true;
+            refStr = new SpannableString(note.getReference());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                refStr.setSpan(new ForegroundColorSpan(getColor(R.color.colorSecondaryLight)),
+                    0, refStr.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
+        }
+
+        SpannableString timeStr = new SpannableString(CommonUtils.formatDate(note.getUpdatetime()));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            timeStr.setSpan(new ForegroundColorSpan(getColor(R.color.colorGrey)),
+                0, timeStr.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
+
+        SpannableStringBuilder rtn = new SpannableStringBuilder();
+        if (flag) {
+            rtn.append(idStr)
+                .append("  ")
+                .append(priorityStr)
+                .append("  ")
+                .append(tagStr)
+                .append("\n")
+                .append(refStr)
+                .append("\n")
+                .append(timeStr);
+        } else {
+            rtn.append(idStr)
+                .append("  ")
+                .append(priorityStr)
+                .append("  ")
+                .append(tagStr)
+                .append("\n")
+                .append(timeStr);
+        }
+
+        return rtn;
     }
 
 }

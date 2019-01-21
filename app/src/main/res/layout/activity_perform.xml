@@ -54,22 +54,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/comic"
-                android:text="Akyu!"
-                android:textSize="50sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.02"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.98" />
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/perform_fab_next"
                 android:layout_width="wrap_content"
@@ -100,13 +84,35 @@
     </LinearLayout>
 
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/perform_nav_view"
+    <LinearLayout
         android:layout_width="224dp"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        app:menu="@menu/perform_nav_items"
-        app:headerLayout="@layout/perform_nav_header"
-        android:fitsSystemWindows="true"/>
+        android:orientation="vertical"
+        >
+
+        <android.support.design.widget.NavigationView
+            android:id="@+id/perform_nav_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/perform_nav_header"
+            app:menu="@menu/perform_nav_items"
+            />
+        <TextView
+            android:id="@+id/perform_nav_footer_tv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorWhite2"
+            android:elevation="16dp"
+            android:gravity="center"
+            android:text="Test1"
+            android:textSize="@dimen/text_small"
+            style="@style/app_tv_normal"
+            />
+    </LinearLayout>
+
 
 </com.hippo.drawerlayout.DrawerLayout>

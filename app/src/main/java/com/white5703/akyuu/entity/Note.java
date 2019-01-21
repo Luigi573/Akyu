@@ -25,6 +25,8 @@ public class Note {
 
     private Date updatetime;
 
+    private String reference;
+
     /** Used to resolve relations */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
@@ -33,15 +35,16 @@ public class Note {
     @Generated(hash = 363862535)
     private transient NoteDao myDao;
 
-    @Generated(hash = 2121453218)
+    @Generated(hash = 1008358836)
     public Note(Long id, String brief, String detail, String tag, int priority,
-        Date updatetime) {
+        Date updatetime, String reference) {
         this.id = id;
         this.brief = brief;
         this.detail = detail;
         this.tag = tag;
         this.priority = priority;
         this.updatetime = updatetime;
+        this.reference = reference;
     }
 
     @Generated(hash = 1272611929)
@@ -138,5 +141,13 @@ public class Note {
 
     public void setBrief(String brief) {
         this.brief = brief;
+    }
+
+    public String getReference() {
+        return this.reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 }
