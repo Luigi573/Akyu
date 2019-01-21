@@ -57,6 +57,7 @@ public class DbManager {
         mNoteDao.deleteAll();
     }
 
+    @SuppressWarnings("unchecked")
     public static List<String> getTagList() {
         List<String> listTag = new ArrayList<>();
         listTag.add("Any");
