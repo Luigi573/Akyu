@@ -103,7 +103,7 @@ public class PerformActivity extends AppCompatActivity {
                                 break;
                             }
                             DbManager.increasePriority(noteList.get(cur).getId());
-                            initData(noteList.get(cur));
+                            tvNavFooter.setText(buildNavFooterText(noteList.get(cur)));
                             break;
                         case R.id.perform_nav_item_down:
                             if (noteList.get(cur).getId() == 999999L) {
@@ -117,7 +117,7 @@ public class PerformActivity extends AppCompatActivity {
                                 break;
                             }
                             DbManager.decreasePriority(noteList.get(cur).getId());
-                            initData(noteList.get(cur));
+                            tvNavFooter.setText(buildNavFooterText(noteList.get(cur)));
                             break;
                         case R.id.perform_nav_item_delete:
                             if (noteList.get(cur).getId() == 999999L) {
