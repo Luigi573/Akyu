@@ -17,17 +17,6 @@ public class NoteDao extends AbstractDao<Note, Long> {
 
     public static final String TABLENAME = "NOTE";
 
-    private DaoSession daoSession;
-
-    public NoteDao(DaoConfig config) {
-        super(config);
-    }
-
-    public NoteDao(DaoConfig config, DaoSession daoSession) {
-        super(config, daoSession);
-        this.daoSession = daoSession;
-    }
-    
     /** Creates the underlying database table. */
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
@@ -41,10 +30,15 @@ public class NoteDao extends AbstractDao<Note, Long> {
             "\"REFERENCE\" TEXT);"); // 6: reference
     }
 
-    /** Drops the underlying database table. */
-    public static void dropTable(Database db, boolean ifExists) {
-        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"NOTE\"";
-        db.execSQL(sql);
+    private DaoSession daoSession;
+
+    public NoteDao(DaoConfig config) {
+        super(config);
+    }
+
+    public NoteDao(DaoConfig config, DaoSession daoSession) {
+        super(config, daoSession);
+        this.daoSession = daoSession;
     }
 
     @Override
@@ -81,6 +75,12 @@ public class NoteDao extends AbstractDao<Note, Long> {
         if (reference != null) {
             stmt.bindString(7, reference);
         }
+    }
+
+    /** Drops the underlying database table. */
+    public static void dropTable(Database db, boolean ifExists) {
+        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"NOTE\"";
+        db.execSQL(sql);
     }
 
     @Override
