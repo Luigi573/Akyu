@@ -4,7 +4,7 @@
     package="com.white5703.akyuu">
 
     <application
-        android:name="com.white5703.akyuu.app.AkyuuApplication"
+        android:name=".app.AkyuuApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/akyuu_app_name"
@@ -13,16 +13,18 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
-        <activity android:name="com.white5703.akyuu.ui.activity.MainActivity">
+        <activity
+            android:name=".ui.activity.SettingsActivity"
+            android:label="@string/title_activity_settings">
+        </activity>
+        <activity android:name=".ui.activity.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity android:name=".ui.activity.PerformActivity"/>
-
         <activity android:name=".ui.activity.ItemListActivity"/>
     </application>
 

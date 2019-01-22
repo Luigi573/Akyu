@@ -22,6 +22,14 @@
     <string name="list_item_hint_detail">Detail</string>
     <string name="list_menu_select_by_tag">Select by tag</string>
     <string name="list_menu_order_by_time">Order by time</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <string name="pref_setting_about_category_title">About</string>
+    <string name="pref_setting_about_author_key">author</string>
+    <string name="pref_setting_about_author_title">Author</string>
+    <string name="pref_setting_about_author_summary"><![CDATA[White57030 <white57030@gmail.com>]]></string>
+
+    <string name="pref_setting_about_category_key">settings_about</string>
 
 
 </resources>
