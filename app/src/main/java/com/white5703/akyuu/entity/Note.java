@@ -2,8 +2,12 @@ package com.white5703.akyuu.entity;
 
 import com.white5703.akyuu.dao.DaoSession;
 import com.white5703.akyuu.dao.NoteDao;
+import com.white5703.akyuu.dao.converter.StringListConverter;
+import com.white5703.akyuu.util.CommonUtils;
 import java.util.Date;
+import java.util.List;
 import org.greenrobot.greendao.DaoException;
+import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -27,6 +31,17 @@ public class Note {
 
     private String reference;
 
+    private int briefgravity;
+
+    private int brieffontsize;
+
+    private int detailgravity;
+
+    private int detailfontsize;
+
+    @Convert(columnType = String.class, converter = StringListConverter.class)
+    private List<String> latexs;
+
     /** Used to resolve relations */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
@@ -35,9 +50,10 @@ public class Note {
     @Generated(hash = 363862535)
     private transient NoteDao myDao;
 
-    @Generated(hash = 1008358836)
+    @Generated(hash = 1964308962)
     public Note(Long id, String brief, String detail, String tag, int priority,
-        Date updatetime, String reference) {
+        Date updatetime, String reference, int briefgravity, int brieffontsize,
+        int detailgravity, int detailfontsize, List<String> latexs) {
         this.id = id;
         this.brief = brief;
         this.detail = detail;
@@ -45,6 +61,11 @@ public class Note {
         this.priority = priority;
         this.updatetime = updatetime;
         this.reference = reference;
+        this.briefgravity = briefgravity;
+        this.brieffontsize = brieffontsize;
+        this.detailgravity = detailgravity;
+        this.detailfontsize = detailfontsize;
+        this.latexs = latexs;
     }
 
     @Generated(hash = 1272611929)
@@ -149,5 +170,73 @@ public class Note {
 
     public void setReference(String reference) {
         this.reference = reference;
+    }
+
+    public int getBrieffontsize() {
+        return this.brieffontsize;
+    }
+
+    public void setBrieffontsize(int brieffontsize) {
+        this.brieffontsize = brieffontsize;
+    }
+
+    public int getDetailfontsize() {
+        return this.detailfontsize;
+    }
+
+    public void setDetailfontsize(int detailfontsize) {
+        this.detailfontsize = detailfontsize;
+    }
+
+    public List<String> getLatexs() {
+        return this.latexs;
+    }
+
+    public void setLatexs(List<String> latexs) {
+        this.latexs = latexs;
+    }
+
+    public int getBriefgravity() {
+        return this.briefgravity;
+    }
+
+    public void setBriefgravity(int briefgravity) {
+        this.briefgravity = briefgravity;
+    }
+
+    public int getDetailgravity() {
+        return this.detailgravity;
+    }
+
+    public void setDetailgravity(int detailgravity) {
+        this.detailgravity = detailgravity;
+    }
+
+    public boolean equal(Note note) {
+        if (!brief.equals(note.brief)) return false;
+        if (!(brieffontsize == note.brieffontsize)) return false;
+        if (!(briefgravity == note.briefgravity)) return false;
+        if (!detail.equals(note.detail)) return false;
+        if (!(detailfontsize == note.detailfontsize)) return false;
+        if (!(detailgravity == note.detailgravity)) return false;
+        if (!tag.equals(note.tag)) return false;
+        if (!reference.equals(note.reference)) return false;
+        if (!(priority == note.priority)) return false;
+        return CommonUtils.equalsList(latexs, note.latexs);
+    }
+
+    public Note getTempCopy() {
+        Note temp = new Note();
+        temp.setBrief(brief);
+        temp.setBrieffontsize(brieffontsize);
+        temp.setBriefgravity(briefgravity);
+        temp.setDetail(detail);
+        temp.setDetailfontsize(detailfontsize);
+        temp.setDetailgravity(detailgravity);
+        temp.setTag(tag);
+        temp.setPriority(priority);
+        temp.setReference(reference);
+        temp.setLatexs(latexs);
+        return temp;
     }
 }

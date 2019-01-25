@@ -8,6 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="EditTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorSecondary</item>
+        <item name="colorAccent">@color/colorSecondaryAccentLight</item>
+    </style>
+
+    <style name="ListTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorSecondary</item>
+        <item name="colorAccent">@color/colorSecondaryAccentLight</item>
+    </style>
+
     <style name="app_tv_normal">
         <item name="android:fontFamily">@font/notosans_medium</item>
     </style>
@@ -66,6 +76,11 @@
         <item name="android:textColor">@color/colorBlackLight</item>
         <item name="android:textSize">@dimen/text_medium</item>
         <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="dialog_item" parent="app_tv_normal">
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
     </style>
 
 

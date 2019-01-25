@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <com.xw.repo.XEditText
+        android:id="@+id/dialog_edit_brief_et_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Text"
+        android:shadowColor="@color/colorSecondaryAccent"
+        style="@style/dialog_item"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_edit_tv_size"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_medium"
+        style="@style/dialog_item"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        style="@style/dialog_item"
+        >
+        <SeekBar
+            android:id="@+id/dialog_edit_brief_bar_size"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            />
+        <EditText
+            android:id="@+id/dialog_edit_brief_et_size"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="15"
+            android:textSize="@dimen/text_medium"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_edit_tv_gravity"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_medium"
+        style="@style/dialog_item"
+        />
+
+    <RadioGroup
+        android:id="@+id/dialog_edit_brief_radio_gravity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        style="@style/dialog_item"
+        >
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/dialog_edit_brief_radio_gravity_start"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/dialog_edit_rd_start"
+            />
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/dialog_edit_brief_radio_gravity_center"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/dialog_edit_rd_center"
+            />
+
+    </RadioGroup>
+
+</LinearLayout>

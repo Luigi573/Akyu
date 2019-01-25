@@ -1,6 +1,7 @@
 package com.white5703.akyuu.ui.adapter;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ public class ItemListAdapter
     private List<Note> itemList;
 
     private OnClickInterface onClickInterface;
+    private OnLongClickInterface onLongClickInterface;
 
     public ItemListAdapter(List<Note> itemList) {
         this.itemList = itemList;
@@ -24,6 +26,10 @@ public class ItemListAdapter
 
     public void setOnClickListener(OnClickInterface onClickInterface) {
         this.onClickInterface = onClickInterface;
+    }
+
+    public void setOnLongClickListener(OnLongClickInterface onLongClickInterface) {
+        this.onLongClickInterface = onLongClickInterface;
     }
 
     @NonNull
@@ -38,12 +44,27 @@ public class ItemListAdapter
     @Override
     public void onBindViewHolder(@NonNull final MenuItemViewHolder holder, final int position) {
         //Log.v("Akyuu","OnBindViewHolder");
-        Note item = itemList.get(holder.getAdapterPosition());
+        final Note item = itemList.get(holder.getAdapterPosition());
 
         holder.tvBrief.setText(item.getBrief());
         holder.tvDetial.setText(item.getDetail());
         holder.tvTag.setText(item.getTag());
         holder.tvTime.setText(CommonUtils.formatDate(item.getUpdatetime()));
+
+        holder.cardItem.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                if (onClickInterface != null) {
+                    onClickInterface.onClick(v, item.getId(), holder.getAdapterPosition());
+                }
+            }
+        });
+
+        holder.cardItem.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override public boolean onLongClick(View v) {
+                onLongClickInterface.onLongClick(v, item.getId(), holder.getAdapterPosition());
+                return true;
+            }
+        });
 
 
     }
@@ -54,10 +75,15 @@ public class ItemListAdapter
     }
 
     public interface OnClickInterface {
-        void onClick(View v, int position);
+        void onClick(View v, long noteId, int position);
+    }
+
+    public interface OnLongClickInterface {
+        void onLongClick(View v, long noteId, int position);
     }
 
     class MenuItemViewHolder extends RecyclerView.ViewHolder {
+        CardView cardItem;
         TextView tvBrief;
         TextView tvDetial;
         TextView tvTag;
@@ -65,6 +91,7 @@ public class ItemListAdapter
 
         MenuItemViewHolder(View itemView) {
             super(itemView);
+            cardItem = itemView.findViewById(R.id.list_item_cv);
             tvBrief = itemView.findViewById(R.id.list_item_tv_brief);
             tvDetial = itemView.findViewById(R.id.list_item_tv_detail);
             tvTag = itemView.findViewById(R.id.list_item_tv_tag);

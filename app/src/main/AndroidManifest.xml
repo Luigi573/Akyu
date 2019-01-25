@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.white5703.akyuu">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".app.AkyuuApplication"
         android:allowBackup="true"
@@ -25,7 +27,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.PerformActivity"/>
-        <activity android:name=".ui.activity.ItemListActivity"/>
+        <activity
+            android:name=".ui.activity.ItemListActivity"
+            android:theme="@style/ListTheme"/>
+        <activity
+            android:name=".ui.activity.EditActivity"
+            android:theme="@style/EditTheme"/>
     </application>
 
 </manifest>

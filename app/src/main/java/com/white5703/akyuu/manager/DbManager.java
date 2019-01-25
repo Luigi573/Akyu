@@ -3,6 +3,7 @@ package com.white5703.akyuu.manager;
 import com.white5703.akyuu.app.AkyuuApplication;
 import com.white5703.akyuu.dao.NoteDao;
 import com.white5703.akyuu.entity.Note;
+import com.white5703.akyuu.util.CommonUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,15 +16,25 @@ public class DbManager {
     private static NoteDao mNoteDao = AkyuuApplication.getInstance().getDaoSession().getNoteDao();
 
     public static void insertNote(String brief, String detail, String tag, int priority,
-        String reference) {
-        Note note = new Note();
+        String reference, int briefgravity, int brieffontsize,
+        int detailgravity, int detailfontsize, List<String> latexs) {
+        Note note = CommonUtils.getDefaultNote();
         note.setBrief(brief);
         note.setDetail(detail);
         note.setPriority(priority);
         note.setTag(tag);
         note.setUpdatetime(new Date());
         note.setReference(reference);
+        note.setBriefgravity(briefgravity);
+        note.setBrieffontsize(brieffontsize);
+        note.setDetailgravity(detailgravity);
+        note.setDetailfontsize(detailfontsize);
+        note.setLatexs(latexs);
         mNoteDao.insert(note);
+    }
+
+    public static void insertDefaultNote() {
+        mNoteDao.insert(CommonUtils.getDefaultNote());
     }
 
     public static void deleteNote(long id) {
@@ -32,18 +43,27 @@ public class DbManager {
 
     public static void increasePriority(long id) {
         Note note = mNoteDao.loadByRowId(id);
-        note.setPriority(note.getPriority() + 2);
+        note.setPriority(note.getPriority() + 1);
         mNoteDao.save(note);
     }
 
     public static void decreasePriority(long id) {
         Note note = mNoteDao.loadByRowId(id);
-        note.setPriority(note.getPriority() - 2);
+        note.setPriority(note.getPriority() - 1);
         mNoteDao.save(note);
     }
 
     public static long getNoteCount() {
         return mNoteDao.count();
+    }
+
+    public static Note getNote(long id) {
+        return mNoteDao.load(id);
+    }
+
+    public static Note getLatestNote() {
+        List<Note> allNote = mNoteDao.loadAll();
+        return allNote.get(allNote.size() - 1);
     }
 
     public static List getNoteList(String tag) {
@@ -53,6 +73,10 @@ public class DbManager {
 
         Query query = mNoteDao.queryBuilder().where(NoteDao.Properties.Tag.eq(tag)).build();
         return query.list();
+    }
+
+    public static void updateNote(Note note) {
+        mNoteDao.update(note);
     }
 
     public static void clearTableNote() {

@@ -9,9 +9,9 @@
     <color name="colorSecondary">#FF8900</color>
     <color name="colorSecondaryDark">#9C2000</color>
 
-    <color name="colorSecondary2Light">#4E96B9</color>
-    <color name="colorSecondary2">#086FA2</color>
-    <color name="colorSecondary2Dark">#044362</color>
+    <color name="colorSecondaryAccentLight">#4E96B9</color>
+    <color name="colorSecondaryAccent">#086FA1</color>
+    <color name="colorSecondaryAccentDark">#044362</color>
 
     <color name="colorAccent">#FF3500</color>
     <color name="colorLightGrey">#EEECE8</color>
@@ -24,9 +24,9 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorWhite2">#FAFAFA</color>
 
-    <color name="colorPriority1">#ADD68A</color>
-    <color name="colorPriority3">#72BE44</color>
-    <color name="colorPriority5">#FEF102</color>
-    <color name="colorPriority7">#F58225</color>
-    <color name="colorPriority9">#EE1C25</color>
+    <color name="colorPriority1">#9D9D9D</color>
+    <color name="colorPriority2">#1Eff00</color>
+    <color name="colorPriority3">#0070FF</color>
+    <color name="colorPriority4">#A335EE</color>
+    <color name="colorPriority5">#FF8000</color>
 </resources>

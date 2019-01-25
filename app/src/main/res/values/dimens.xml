@@ -9,4 +9,6 @@
     <dimen name="text_small">14sp</dimen>
     <dimen name="text_super_small">12sp</dimen>
 
+    <dimen name="text_latex">56sp</dimen>
+
 </resources>

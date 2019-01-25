@@ -2,7 +2,9 @@ package com.white5703.akyuu.dao;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
+import com.white5703.akyuu.dao.converter.StringListConverter;
 import com.white5703.akyuu.entity.Note;
+import java.util.List;
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.Property;
 import org.greenrobot.greendao.database.Database;
@@ -17,6 +19,18 @@ public class NoteDao extends AbstractDao<Note, Long> {
 
     public static final String TABLENAME = "NOTE";
 
+    private final StringListConverter latexsConverter = new StringListConverter();
+    private DaoSession daoSession;
+
+    public NoteDao(DaoConfig config) {
+        super(config);
+    }
+
+    public NoteDao(DaoConfig config, DaoSession daoSession) {
+        super(config, daoSession);
+        this.daoSession = daoSession;
+    }
+    
     /** Creates the underlying database table. */
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
@@ -27,18 +41,18 @@ public class NoteDao extends AbstractDao<Note, Long> {
                 "\"TAG\" TEXT," + // 3: tag
             "\"PRIORITY\" INTEGER NOT NULL ," + // 4: priority
             "\"UPDATETIME\" INTEGER," + // 5: updatetime
-            "\"REFERENCE\" TEXT);"); // 6: reference
+            "\"REFERENCE\" TEXT," + // 6: reference
+            "\"BRIEFGRAVITY\" INTEGER NOT NULL ," + // 7: briefgravity
+            "\"BRIEFFONTSIZE\" INTEGER NOT NULL ," + // 8: brieffontsize
+            "\"DETAILGRAVITY\" INTEGER NOT NULL ," + // 9: detailgravity
+            "\"DETAILFONTSIZE\" INTEGER NOT NULL ," + // 10: detailfontsize
+            "\"LATEXS\" TEXT);"); // 11: latexs
     }
 
-    private DaoSession daoSession;
-
-    public NoteDao(DaoConfig config) {
-        super(config);
-    }
-
-    public NoteDao(DaoConfig config, DaoSession daoSession) {
-        super(config, daoSession);
-        this.daoSession = daoSession;
+    /** Drops the underlying database table. */
+    public static void dropTable(Database db, boolean ifExists) {
+        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"NOTE\"";
+        db.execSQL(sql);
     }
 
     @Override
@@ -75,12 +89,15 @@ public class NoteDao extends AbstractDao<Note, Long> {
         if (reference != null) {
             stmt.bindString(7, reference);
         }
-    }
+        stmt.bindLong(8, entity.getBriefgravity());
+        stmt.bindLong(9, entity.getBrieffontsize());
+        stmt.bindLong(10, entity.getDetailgravity());
+        stmt.bindLong(11, entity.getDetailfontsize());
 
-    /** Drops the underlying database table. */
-    public static void dropTable(Database db, boolean ifExists) {
-        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"NOTE\"";
-        db.execSQL(sql);
+        List latexs = entity.getLatexs();
+        if (latexs != null) {
+            stmt.bindString(12, latexsConverter.convertToDatabaseValue(latexs));
+        }
     }
 
     @Override
@@ -117,6 +134,15 @@ public class NoteDao extends AbstractDao<Note, Long> {
         if (reference != null) {
             stmt.bindString(7, reference);
         }
+        stmt.bindLong(8, entity.getBriefgravity());
+        stmt.bindLong(9, entity.getBrieffontsize());
+        stmt.bindLong(10, entity.getDetailgravity());
+        stmt.bindLong(11, entity.getDetailfontsize());
+
+        List latexs = entity.getLatexs();
+        if (latexs != null) {
+            stmt.bindString(12, latexsConverter.convertToDatabaseValue(latexs));
+        }
     }
 
     @Override
@@ -140,7 +166,13 @@ public class NoteDao extends AbstractDao<Note, Long> {
             cursor.getInt(offset + 4), // priority
             cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)),
             // updatetime
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // reference
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // reference
+            cursor.getInt(offset + 7), // briefgravity
+            cursor.getInt(offset + 8), // brieffontsize
+            cursor.getInt(offset + 9), // detailgravity
+            cursor.getInt(offset + 10), // detailfontsize
+            cursor.isNull(offset + 11) ? null
+                : latexsConverter.convertToEntityProperty(cursor.getString(offset + 11)) // latexs
         );
         return entity;
     }
@@ -155,6 +187,12 @@ public class NoteDao extends AbstractDao<Note, Long> {
         entity.setUpdatetime(
             cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)));
         entity.setReference(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setBriefgravity(cursor.getInt(offset + 7));
+        entity.setBrieffontsize(cursor.getInt(offset + 8));
+        entity.setDetailgravity(cursor.getInt(offset + 9));
+        entity.setDetailfontsize(cursor.getInt(offset + 10));
+        entity.setLatexs(cursor.isNull(offset + 11) ? null
+            : latexsConverter.convertToEntityProperty(cursor.getString(offset + 11)));
     }
      
     /**
@@ -173,6 +211,16 @@ public class NoteDao extends AbstractDao<Note, Long> {
             new Property(5, java.util.Date.class, "updatetime", false, "UPDATETIME");
         public final static Property Reference =
             new Property(6, String.class, "reference", false, "REFERENCE");
+        public final static Property Briefgravity =
+            new Property(7, int.class, "briefgravity", false, "BRIEFGRAVITY");
+        public final static Property Brieffontsize =
+            new Property(8, int.class, "brieffontsize", false, "BRIEFFONTSIZE");
+        public final static Property Detailgravity =
+            new Property(9, int.class, "detailgravity", false, "DETAILGRAVITY");
+        public final static Property Detailfontsize =
+            new Property(10, int.class, "detailfontsize", false, "DETAILFONTSIZE");
+        public final static Property Latexs =
+            new Property(11, String.class, "latexs", false, "LATEXS");
     }
     
     @Override

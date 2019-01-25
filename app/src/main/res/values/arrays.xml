@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="list_item_long_click_dialog">
-        <item>Increase Priority</item>
-        <item>Decrease Priority</item>
+    <string-array name="item_list_item_long_click_dialog">
+        <item>Select by its Tag</item>
+        <item>Edit Item</item>
         <item>Delete Item</item>
     </string-array>
 
