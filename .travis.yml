@@ -7,6 +7,8 @@ android:
 before_script:
 - chmod +x gradlew
 before_install:
+- openssl aes-256-cbc -K $encrypted_6ca28332d87c_key -iv $encrypted_6ca28332d87c_iv
+  -in akyu.jks.enc -out akyu.jks -d
 - gem install fir-cli
 script:
 - "./gradlew clean"
@@ -15,6 +17,3 @@ script:
 after_success:
 - fir p app/build/outputs/apk/release/app-release.apk -T $FIR_TOKEN -c "`git cat-file
   tag $TRAVIS_TAG`"
-env:
-  global:
-    secure: Urn1HHwmD9nPHNndypL5eZDPzf8qrGmvEFSDOaDbmuiiUDbGFaFy+3YWJBnHCJiQCNV5c2tEgxBax9GVERnniSY+2ylbg3jYQVpEpJHPK7mZZx2GtRLs8RHn/ud9udkDNQubt4N5vMJpye2jc0sONqD5YXKtm9O3CRAS3hqncSdaYiIsUG/nGWC/5Js8An68B7mtKq89Ja+W8Pdoy5DSd6P6e6vl+YakRZKhIjelF8rrt8PeD99oXtvJQnrlNGWoJ2Tju8u8L/EkJNbqzCCPqZyWh4TrOAFzde5ejgyoxIGVCWldmNy8k5ToVgGxPxy5YbiDsc9acB0PLJsKUNifK31L5ZP6ZvolgFO64RqjFMYgqq5TYJ5XdROi9Re+lgm20JmqSZKwCw0NUsdazw+zNn2yZBBzIQA9vGJbdU/9HuPIbJIGGwdQlf9EVNRhtMeEs4GquBO54cTr2KtC3Mo2P4ZSGcRcNF2LNfv9HXD8hY2YPtzuK4LNk3NKGIczM4ER7O5phZueGo6S9rw8GMEYGVJBCppObrwJWmLDIy123fIz7MaIyXdAnncAV5yLiCIuf4cQPzPsodtZBoig9wquy3sxsPuwSQgrwvd+JPQtUaWslh5WfNcGhrAsjxXGX6r4roaDLuJ6U+8EG8kuDFlp7Q4uoPXleq2Vc6yNiwWExYM=
